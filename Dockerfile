@@ -1,4 +1,4 @@
-FROM ubuntu as baseline
+FROM ubuntu:22.04 as baseline
 
 LABEL maintainer="Arsenio Aguirre" \
       email="a_aguirre117@hotmail.com"
@@ -84,7 +84,7 @@ RUN \
     libbz2-dev \
     # crackmapexec dependencies
     libffi-dev \
-    python-dev && \
+    python-dev-is-python3 && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y php \
     libapache2-mod-php && \
     gem install \
@@ -264,7 +264,7 @@ RUN \
     ln -s /tools/recon/gowitness/gowitness /usr/bin/gowitness && \
 # Install subjack
     go get github.com/haccer/subjack && \
-# Install SubOver 
+# Install SubOver
     go get github.com/Ice3man543/SubOver && \
 # Install tko-subs
     go get github.com/anshumanbh/tko-subs && \
@@ -407,7 +407,7 @@ RUN \
 # Install dalfox
     ln -s /tools/owasp/dalfox/dalfox /usr/bin/dalfox && \
 # Install jaeles
-    ln -s /tools/owasp/jaeles/jaeles /usr/bin/jaeles 
+    ln -s /tools/owasp/jaeles/jaeles /usr/bin/jaeles
 
 # BUILDER BRUTE FORCE
 FROM baseline as bruteForce
@@ -479,7 +479,7 @@ WORKDIR /temp
 RUN \
     git clone --depth 1 https://github.com/CiscoCXSecurity/enum4linux.git && \
 # Download enum4linx-ng
-    git clone https://github.com/cddmp/enum4linux-ng.git && \    
+    git clone https://github.com/cddmp/enum4linux-ng.git && \
 # Download PEASS - Privilege Escalation Awesome Scripts SUITE
     mkdir -p /temp/peass
 
@@ -572,7 +572,7 @@ WORKDIR /temp/netcat
 # Download netcat
 RUN \
     wget --quiet https://github.com/int0x33/nc.exe/raw/master/nc64.exe -O nc64.exe && \
-    wget --quiet https://github.com/int0x33/nc.exe/raw/master/nc.exe -O nc32.exe 
+    wget --quiet https://github.com/int0x33/nc.exe/raw/master/nc.exe -O nc32.exe
 WORKDIR /temp/plink
 # Download plink
 RUN \
@@ -611,9 +611,9 @@ RUN \
     go get -u github.com/tomnomnom/qsreplace
 
 # Install nuclei
-RUN \
-    go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest && \
-    nuclei -update-templates
+# RUN \
+#     go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest && \
+#     nuclei -update-templates
 
 # OS TUNNING
 
